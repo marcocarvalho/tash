@@ -1,0 +1,10 @@
+version: '2'
+services:
+  dev:
+    build: .
+    command: /bin/sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/ta-lib-shell
+      - $HOME/.ssh:/root/.ssh
