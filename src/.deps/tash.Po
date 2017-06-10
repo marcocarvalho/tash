@@ -1,0 +1,20 @@
+tash.o: tash.c /usr/include/stdc-predef.h include/tash.h \
+ include/options.h /usr/include/fortify/stdio.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/bits/alltypes.h \
+ /usr/include/fortify/fortify-headers.h
+
+/usr/include/stdc-predef.h:
+
+include/tash.h:
+
+include/options.h:
+
+/usr/include/fortify/stdio.h:
+
+/usr/include/stdio.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/alltypes.h:
+
+/usr/include/fortify/fortify-headers.h:

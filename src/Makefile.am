@@ -1,8 +1,9 @@
 # what flags you want to pass to the C compiler & linker
-CFLAGS = --pedantic -Wall -std=c99 -O2
-LDFLAGS =
+AM_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include
+# AM_LDFLAGS =
 
 # this lists the binaries to produce, the (non-PHONY, binary) targets in
 # the previous manual Makefile
-bin_PROGRAMS = ta-lib-cli
-ta-lib-cli_SOURCES = ta-lib-cli.c include/ta-lib.h options.c include/options.h
+bin_PROGRAMS = tash
+tash_SOURCES = tash.c \
+  options.c

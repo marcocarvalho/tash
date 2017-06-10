@@ -1,4 +1,4 @@
-#include "ta-lib.h"
+#include "tash.h"
 
 int main(int argc, char** argv)
 {

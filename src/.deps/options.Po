@@ -1,0 +1,18 @@
+options.o: options.c /usr/include/stdc-predef.h include/options.h \
+ /usr/include/fortify/stdio.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/bits/alltypes.h \
+ /usr/include/fortify/fortify-headers.h
+
+/usr/include/stdc-predef.h:
+
+include/options.h:
+
+/usr/include/fortify/stdio.h:
+
+/usr/include/stdio.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/alltypes.h:
+
+/usr/include/fortify/fortify-headers.h:
