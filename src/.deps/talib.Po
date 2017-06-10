@@ -1,17 +1,20 @@
-tash.o: tash.c /usr/include/stdc-predef.h include/tash.h \
- /usr/include/fortify/stdio.h /usr/include/stdio.h \
- /usr/include/features.h /usr/include/bits/alltypes.h \
- /usr/include/fortify/fortify-headers.h include/talib.h \
+talib.o: talib.c /usr/include/stdc-predef.h include/talib.h \
  /usr/local/include/ta-lib/ta_libc.h \
- /usr/local/include/ta-lib/ta_common.h /usr/include/limits.h \
- /usr/include/bits/limits.h /usr/include/float.h \
+ /usr/local/include/ta-lib/ta_common.h /usr/include/fortify/stdio.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/bits/alltypes.h /usr/include/fortify/fortify-headers.h \
+ /usr/include/limits.h /usr/include/bits/limits.h /usr/include/float.h \
  /usr/include/bits/float.h /usr/local/include/ta-lib/ta_defs.h \
  /usr/local/include/ta-lib/ta_func.h \
- /usr/local/include/ta-lib/ta_abstract.h include/options.h
+ /usr/local/include/ta-lib/ta_abstract.h
 
 /usr/include/stdc-predef.h:
 
-include/tash.h:
+include/talib.h:
+
+/usr/local/include/ta-lib/ta_libc.h:
+
+/usr/local/include/ta-lib/ta_common.h:
 
 /usr/include/fortify/stdio.h:
 
@@ -22,12 +25,6 @@ include/tash.h:
 /usr/include/bits/alltypes.h:
 
 /usr/include/fortify/fortify-headers.h:
-
-include/talib.h:
-
-/usr/local/include/ta-lib/ta_libc.h:
-
-/usr/local/include/ta-lib/ta_common.h:
 
 /usr/include/limits.h:
 
@@ -42,5 +39,3 @@ include/talib.h:
 /usr/local/include/ta-lib/ta_func.h:
 
 /usr/local/include/ta-lib/ta_abstract.h:
-
-include/options.h:

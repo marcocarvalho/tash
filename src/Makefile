@@ -98,7 +98,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_tash_OBJECTS = tash.$(OBJEXT) options.$(OBJEXT)
+am_tash_OBJECTS = tash.$(OBJEXT) options.$(OBJEXT) talib.$(OBJEXT)
 tash_OBJECTS = $(am_tash_OBJECTS)
 tash_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_$(V))
@@ -243,9 +243,11 @@ top_builddir = ..
 top_srcdir = ..
 
 # what flags you want to pass to the C compiler & linker
-AM_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include
+AM_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include -I/usr/local/include/ta-lib -DHAVE_CONFIG_H
+AM_LDFLAGS = -lta_lib -lpthread -ldl
 tash_SOURCES = tash.c \
-  options.c
+  options.c \
+  talib.c
 
 all: all-am
 
@@ -334,6 +336,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/options.Po
+include ./$(DEPDIR)/talib.Po
 include ./$(DEPDIR)/tash.Po
 
 .c.o:
