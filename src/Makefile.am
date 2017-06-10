@@ -6,4 +6,4 @@ tash_SOURCES = options.c \
   tash.c
 
 tash_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include -I/usr/local/include/ta-lib -DHAVE_CONFIG_H -Wl,--rpath -Wl,LIBDIR
-tash_LDFLAGS = -lta_lib -lpthread -ldl
+tash_LDFLAGS = -lpthread -ldl -static -lta_lib
