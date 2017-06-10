@@ -2,9 +2,13 @@ version: '2'
 services:
   dev:
     build: .
-    command: /bin/sh
+    command: /bin/bash
     stdin_open: true
     tty: true
     volumes:
       - .:/ta-lib-shell
       - $HOME/.ssh:/root/.ssh
+    environment:
+      - LIBDIR=/usr/local/lib
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - LD_RUN_PATH=/usr/local/lib

@@ -3,7 +3,7 @@
 int main(int argc, char** argv)
 {
   if(initialize()){
-    printf("initialized!\n");
+    printf("initialized %s! \n", TA_GetVersionString());
     if(shutdown()){
       printf("shutdown!\n");
     }

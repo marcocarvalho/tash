@@ -98,9 +98,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_tash_OBJECTS = tash.$(OBJEXT) options.$(OBJEXT) talib.$(OBJEXT)
+am_tash_OBJECTS = tash-options.$(OBJEXT) tash-talib.$(OBJEXT) \
+	tash-tash.$(OBJEXT)
 tash_OBJECTS = $(am_tash_OBJECTS)
 tash_LDADD = $(LDADD)
+tash_LINK = $(CCLD) $(tash_CFLAGS) $(CFLAGS) $(tash_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
 am__v_P_0 = false
@@ -117,6 +120,10 @@ DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_$(V))
@@ -163,13 +170,13 @@ AM_DEFAULT_VERBOSITY = 1
 AUTOCONF = ${SHELL} /ta-lib-shell/missing autoconf
 AUTOHEADER = ${SHELL} /ta-lib-shell/missing autoheader
 AUTOMAKE = ${SHELL} /ta-lib-shell/missing automake-1.15
-AWK = awk
+AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"tash\" -DPACKAGE_TARNAME=\"tash\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"tash\ 1.0\" -DPACKAGE_BUGREPORT=\"marco.carvalho.swasthya@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"tash\" -DVERSION=\"1.0\"
+DEFS = -DPACKAGE_NAME=\"tash\" -DPACKAGE_TARNAME=\"tash\" -DPACKAGE_VERSION=\"1.0\" -DPACKAGE_STRING=\"tash\ 1.0\" -DPACKAGE_BUGREPORT=\"marco.carvalho.swasthya@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"tash\" -DVERSION=\"1.0\" -DHAVE_LIBTA_LIB=1
 DEPDIR = .deps
 ECHO_C = 
 ECHO_N = -n
@@ -182,10 +189,10 @@ INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
 LIBOBJS = 
-LIBS = 
+LIBS = -lta_lib 
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /ta-lib-shell/missing makeinfo
-MKDIR_P = .././install-sh -c -d
+MKDIR_P = /bin/mkdir -p
 OBJEXT = o
 PACKAGE = tash
 PACKAGE_BUGREPORT = marco.carvalho.swasthya@gmail.com
@@ -196,7 +203,7 @@ PACKAGE_URL =
 PACKAGE_VERSION = 1.0
 PATH_SEPARATOR = :
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = 
 VERSION = 1.0
 abs_builddir = /ta-lib-shell/src
@@ -233,6 +240,7 @@ pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
+runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
@@ -241,14 +249,12 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
+tash_SOURCES = options.c \
+  talib.c \
+  tash.c
 
-# what flags you want to pass to the C compiler & linker
-AM_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include -I/usr/local/include/ta-lib -DHAVE_CONFIG_H
-AM_LDFLAGS = -lta_lib -lpthread -ldl
-tash_SOURCES = tash.c \
-  options.c \
-  talib.c
-
+tash_CFLAGS = --pedantic -Wall -std=c99 -O2 -I./include -I/usr/local/include/ta-lib -DHAVE_CONFIG_H -Wl,--rpath -Wl,LIBDIR
+tash_LDFLAGS = -lta_lib -lpthread -ldl
 all: all-am
 
 .SUFFIXES:
@@ -327,7 +333,7 @@ clean-binPROGRAMS:
 
 tash$(EXEEXT): $(tash_OBJECTS) $(tash_DEPENDENCIES) $(EXTRA_tash_DEPENDENCIES) 
 	@rm -f tash$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(tash_OBJECTS) $(tash_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(tash_LINK) $(tash_OBJECTS) $(tash_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -335,9 +341,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/options.Po
-include ./$(DEPDIR)/talib.Po
-include ./$(DEPDIR)/tash.Po
+include ./$(DEPDIR)/tash-options.Po
+include ./$(DEPDIR)/tash-talib.Po
+include ./$(DEPDIR)/tash-tash.Po
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -352,6 +358,48 @@ include ./$(DEPDIR)/tash.Po
 #	$(AM_V_CC)source='$<' object='$@' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+tash-options.o: options.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-options.o -MD -MP -MF $(DEPDIR)/tash-options.Tpo -c -o tash-options.o `test -f 'options.c' || echo '$(srcdir)/'`options.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-options.Tpo $(DEPDIR)/tash-options.Po
+#	$(AM_V_CC)source='options.c' object='tash-options.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-options.o `test -f 'options.c' || echo '$(srcdir)/'`options.c
+
+tash-options.obj: options.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-options.obj -MD -MP -MF $(DEPDIR)/tash-options.Tpo -c -o tash-options.obj `if test -f 'options.c'; then $(CYGPATH_W) 'options.c'; else $(CYGPATH_W) '$(srcdir)/options.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-options.Tpo $(DEPDIR)/tash-options.Po
+#	$(AM_V_CC)source='options.c' object='tash-options.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-options.obj `if test -f 'options.c'; then $(CYGPATH_W) 'options.c'; else $(CYGPATH_W) '$(srcdir)/options.c'; fi`
+
+tash-talib.o: talib.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-talib.o -MD -MP -MF $(DEPDIR)/tash-talib.Tpo -c -o tash-talib.o `test -f 'talib.c' || echo '$(srcdir)/'`talib.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-talib.Tpo $(DEPDIR)/tash-talib.Po
+#	$(AM_V_CC)source='talib.c' object='tash-talib.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-talib.o `test -f 'talib.c' || echo '$(srcdir)/'`talib.c
+
+tash-talib.obj: talib.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-talib.obj -MD -MP -MF $(DEPDIR)/tash-talib.Tpo -c -o tash-talib.obj `if test -f 'talib.c'; then $(CYGPATH_W) 'talib.c'; else $(CYGPATH_W) '$(srcdir)/talib.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-talib.Tpo $(DEPDIR)/tash-talib.Po
+#	$(AM_V_CC)source='talib.c' object='tash-talib.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-talib.obj `if test -f 'talib.c'; then $(CYGPATH_W) 'talib.c'; else $(CYGPATH_W) '$(srcdir)/talib.c'; fi`
+
+tash-tash.o: tash.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-tash.o -MD -MP -MF $(DEPDIR)/tash-tash.Tpo -c -o tash-tash.o `test -f 'tash.c' || echo '$(srcdir)/'`tash.c
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-tash.Tpo $(DEPDIR)/tash-tash.Po
+#	$(AM_V_CC)source='tash.c' object='tash-tash.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-tash.o `test -f 'tash.c' || echo '$(srcdir)/'`tash.c
+
+tash-tash.obj: tash.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -MT tash-tash.obj -MD -MP -MF $(DEPDIR)/tash-tash.Tpo -c -o tash-tash.obj `if test -f 'tash.c'; then $(CYGPATH_W) 'tash.c'; else $(CYGPATH_W) '$(srcdir)/tash.c'; fi`
+	$(AM_V_at)$(am__mv) $(DEPDIR)/tash-tash.Tpo $(DEPDIR)/tash-tash.Po
+#	$(AM_V_CC)source='tash.c' object='tash-tash.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(tash_CFLAGS) $(CFLAGS) -c -o tash-tash.obj `if test -f 'tash.c'; then $(CYGPATH_W) 'tash.c'; else $(CYGPATH_W) '$(srcdir)/tash.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique

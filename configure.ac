@@ -13,7 +13,7 @@ AC_PROG_CC
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lm':
 # AC_CHECK_LIB([m], [main])
-# AC_CHECK_LIB(ta_lib, )
+AC_CHECK_LIB(ta_lib, TA_GetVersionString)
 
 # Checks for header files.
 

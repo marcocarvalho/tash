@@ -1,27 +1,63 @@
 tash.o: tash.c /usr/include/stdc-predef.h include/tash.h \
- /usr/include/fortify/stdio.h /usr/include/stdio.h \
- /usr/include/features.h /usr/include/bits/alltypes.h \
- /usr/include/fortify/fortify-headers.h include/talib.h \
+ /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+ /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+ /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h \
+ /usr/include/x86_64-linux-gnu/bits/types.h \
+ /usr/include/x86_64-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/x86_64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio.h \
+ /usr/include/x86_64-linux-gnu/bits/stdio2.h include/talib.h \
  /usr/local/include/ta-lib/ta_libc.h \
- /usr/local/include/ta-lib/ta_common.h /usr/include/limits.h \
- /usr/include/bits/limits.h /usr/include/float.h \
- /usr/include/bits/float.h /usr/local/include/ta-lib/ta_defs.h \
- /usr/local/include/ta-lib/ta_func.h \
+ /usr/local/include/ta-lib/ta_common.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/lib/gcc/x86_64-linux-gnu/5/include/float.h \
+ /usr/local/include/ta-lib/ta_defs.h /usr/local/include/ta-lib/ta_func.h \
  /usr/local/include/ta-lib/ta_abstract.h include/options.h
 
 /usr/include/stdc-predef.h:
 
 include/tash.h:
 
-/usr/include/fortify/stdio.h:
-
 /usr/include/stdio.h:
 
 /usr/include/features.h:
 
-/usr/include/bits/alltypes.h:
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
-/usr/include/fortify/fortify-headers.h:
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/5/include/stdarg.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:
 
 include/talib.h:
 
@@ -29,13 +65,13 @@ include/talib.h:
 
 /usr/local/include/ta-lib/ta_common.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/limits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed/syslimits.h:
+
 /usr/include/limits.h:
 
-/usr/include/bits/limits.h:
-
-/usr/include/float.h:
-
-/usr/include/bits/float.h:
+/usr/lib/gcc/x86_64-linux-gnu/5/include/float.h:
 
 /usr/local/include/ta-lib/ta_defs.h:
 

@@ -1,6 +1,6 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-RUN apk add --no-cache build-base autoconf automake ca-certificates openssl && \
+RUN apt update; apt install -y build-essential autoconf automake ca-certificates openssl vim wget && \
     wget -O ta-lib-0.4.0-src.tar.gz https://sourceforge.net/projects/ta-lib/files/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz/download && \
     tar xvzf ta-lib-0.4.0-src.tar.gz && \
     cd ta-lib/ && \
